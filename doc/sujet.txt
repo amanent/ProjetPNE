@@ -1,3 +1,18 @@
-Sujet 1 ) : Codez une approche Branch & Bound dans laquelle les relaxations linéaires sont résolues par une méthode du Simplexe. Cette dernière doit également être codée. Vous pouvez utiliser une bibliothèque d'algèbre linéaire comme (C)LAPACK. Testez votre approche sur quelques instances (au moins 5) du "MIPLIB".
+Sujet 1 ) : 
+Codez une approche Branch & Bound dans laquelle les relaxations linéaires sont 
+résolues par une méthode du Simplexe. Cette dernière doit également être codée. 
+Vous pouvez utiliser une bibliothèque d'algèbre linéaire comme (C)LAPACK. 
+Testez votre approche sur quelques instances (au moins 5) du "MIPLIB".
         http://miplib.zib.de/
-Prenez les instances "easy". Ou bien des instances du MIPLIB 3.0 ; Afin de commencer à tester, utilisez par exemple le fichier sample2 dans "MIPLIB 2.0".  N'oubliez pas l'étappe de Bounding. Commentez vos résultats et expliquez votre implémentation dans un document qui accompagne votre "logiciel". 
+        
+Prenez les instances "easy". Ou bien des instances du MIPLIB 3.0 ; 
+Afin de commencer à tester, utilisez par exemple le fichier sample2 dans "MIPLIB 2.0".  
+N'oubliez pas l'étappe de Bounding. Commentez vos résultats et expliquez votre 
+implémentation dans un document qui accompagne votre "logiciel". 
+
+
+En principe le langage est libre, mais je vous conseille d'utiliser C++ pour 
+faire le projet. (Si vous utilisez C++ vous pouvez utiliser par exemple 
+"eigen" : http://eigen.tuxfamily.org/index.php?title=Main_Page : pour 
+l'algèbre linéaire)
+
