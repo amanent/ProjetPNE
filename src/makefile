@@ -15,7 +15,7 @@ PARAMS =
 
 # Path where the bin will be
 PGM_PATH = ../bin/
-PGM_NAME = lzw
+PGM_NAME = brandbound
 
 # For the generic utilisation,
 # DO NOT TOUCH ANYTHING UNDER THIS LINE !!!

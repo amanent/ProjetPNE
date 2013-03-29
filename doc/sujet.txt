@@ -16,3 +16,10 @@ faire le projet. (Si vous utilisez C++ vous pouvez utiliser par exemple
 "eigen" : http://eigen.tuxfamily.org/index.php?title=Main_Page : pour 
 l'algèbre linéaire)
 
+Ce que vous devez rendre :
+
+1) Le code source. Un makefile pour un système Linux
+2) Un document qui décrit ce que vous avez fait, pourquoi et les résultats 
+	obtenues. Les résultats peuvent être négatifs dans le sens : Nous n'avons 
+	pas réussi à résoudre telle instance dans tel lapse de temps. Commentez 
+	dans votre document comment un gain d'efficacité peut être espérée. 
