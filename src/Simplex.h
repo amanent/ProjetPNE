@@ -10,11 +10,11 @@
 
 #include "../lib/Eigen/Core"
 #include <utility>
-
+#include "LinearProblem.h"
 
 class Simplex {
 public:
-	Simplex();
+	Simplex(LinearProblem* lp);
 	virtual ~Simplex();
 
 
@@ -22,13 +22,11 @@ public:
 
 
 	int step;
-	int nbCol;
-	int nbLines;
 
-
-	void evaluateMatrixSize(Eigen::Matrix m);
 	std::pair<int, int> pivot;
 
+
+	Eigen::VectorXf best;
 
 
 
