@@ -8,7 +8,7 @@
 #ifndef LINEARPROBLEM_H_
 #define LINEARPROBLEM_H_
 
-#include "Eigen/Core"
+#include "../lib/Eigen/Core"
 
 class LinearProblem {
 public:

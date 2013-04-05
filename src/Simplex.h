@@ -8,7 +8,7 @@
 #ifndef SIMPLEX_H_
 #define SIMPLEX_H_
 
-#include "Eigen/Core"
+#include "../lib/Eigen/Core"
 #include <utility>
 
 
