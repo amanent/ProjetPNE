@@ -10,7 +10,7 @@ LFLAGS = -g
 CFLAGS = -I=lib/ -std=c++0x -Wall -Wextra -pedantic -g
 
 # Name of the files (more .o)
-OBJS = main.o
+OBJS = main.o Simplex.o LinearProblem.o
 PARAMS =
 
 # Path where the bin will be
@@ -22,17 +22,17 @@ PGM_NAME = brandbound
 # ___________________________________________
     
 all : $(OBJS)
-$(GCC) -o $(PGM_PATH)$(PGM_NAME) $(LFLAGS) $(OBJS)
+	$(GCC) -o $(PGM_PATH)$(PGM_NAME) $(LFLAGS) $(OBJS)
 
 # generic method for all the .o
 %.o : %.cpp
-$(GCC) $(CFLAGS) -c $<
+	$(GCC) $(CFLAGS) -c $<
 
 run :
-$(PGM_PATH)$(PGM_NAME) $(PARAMS)
+	$(PGM_PATH)$(PGM_NAME) $(PARAMS)
 
 clean :
--rm -Rf *.o *~
+	-rm -Rf *.o *~
 
 mrproper : clean
--rm -f $(PGM_PATH)$(PGM_NAME)
+	-rm -f $(PGM_PATH)$(PGM_NAME)

@@ -13,7 +13,7 @@
 class LinearProblem {
 public:
 
-	enum Type{MIN, MAX}
+	enum Type{MIN, MAX};
 
 	LinearProblem();
 	virtual ~LinearProblem();
@@ -24,6 +24,8 @@ public:
 
 	LinearProblem* createDual();
 	LinearProblem* dual;
+
+	void switchMode();
 
 };
 
