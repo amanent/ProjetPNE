@@ -26,6 +26,8 @@ public:
 	LinearProblem* dual;
 
 	void switchMode();
+	void minimize();
+	void maximize();
 
 };
 

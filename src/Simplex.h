@@ -23,11 +23,18 @@ public:
 
 	int step;
 
-	std::pair<int, int> pivot;
+//	std::pair<int, int> pivot;
 
-
+	Eigen::VectorXf run();
 	Eigen::VectorXf best;
 
+private:
+	int findPivotColumn();
+	int findPivotRow(int column);
+
+	void pivot(int row, int col);
+	void getBest();
+	int find_basis_variable(int col);
 
 
 

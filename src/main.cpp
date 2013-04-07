@@ -8,11 +8,11 @@ int main(int argc, char **argv) {
 
 
 	LinearProblem lp;
-	Eigen::MatrixXf constraints(3,3);
-	constraints << 1.,2.,3.,4.,5.,6.,7.,8.,9.;
+	Eigen::MatrixXf constraints(3,5);
+	constraints << 40,1,1,1,1,10,-2,-1,1,1,10,0,1,0,-1;
 	lp.constraints = constraints;
-	Eigen::VectorXf objective(2);
-	objective << 2,3;
+	Eigen::VectorXf objective(4);
+	objective << 0.5,3,1,4;
 	lp.objective = objective;
 	lp.type = LinearProblem::MAX;
 
@@ -20,8 +20,14 @@ int main(int argc, char **argv) {
 	std::cout << constraints << std::endl;
 	std::cout << objective << std::endl;
 
+
 	Simplex ss(&lp);
+
 	std::cout << std::endl << ss.tab << std::endl;
+	ss.run();
+	std::cout << std::endl << ss.tab << std::endl;
+
+	std::cout << std::endl << ss.best << std::endl;
 
 
 	return 0;
