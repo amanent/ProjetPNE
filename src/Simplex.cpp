@@ -10,7 +10,7 @@
 
 Simplex::Simplex(LinearProblem* lp) : step(0) {
 	// TODO Auto-generated constructor stub
-
+	problem = lp;
 
 	tab.resize(lp->constraints.rows() + 1, lp->constraints.rows()+ lp->constraints.cols());
 	lp->minimize();
@@ -135,7 +135,7 @@ int Simplex::find_basis_variable(int col) {
 }
 
 void Simplex::getBest() {
-	int xi;
+/*	int xi;
 	for (int j = 0, i(0); j < tab.cols(); ++j) {
 		xi = find_basis_variable(j);
 		if(xi != -1)
@@ -143,4 +143,15 @@ void Simplex::getBest() {
 		//else
 			//best(j) = 0;
 	}
+*/
+	for(int i(0); i < best.rows(); ++i)
+		best(i) = 0;
+	for(int i(0); i < side.rows(); ++i){
+		std::cout << side(i) << "  " << tab(i+1, 0) << std::endl;
+		if(side(i) <= problem->nbVars){
+			best(side(i) - 1) = tab(i+1, 0);
+		}
+	}
+
+
 }

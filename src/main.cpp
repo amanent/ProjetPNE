@@ -8,11 +8,18 @@ int main(int argc, char **argv) {
 
 
 	LinearProblem lp;
-	Eigen::MatrixXf constraints(3,5);
-	constraints << 40,1,1,1,1,10,-2,-1,1,1,10,0,1,0,-1;
+//	Eigen::MatrixXf constraints(3,5);
+//	constraints << 40,1,1,1,1,10,-2,-1,1,1,10,0,1,0,-1;
+
+	Eigen::MatrixXf constraints(3,3);
+	constraints << 18,2,1,42,2,3,24,3,1;
 	lp.constraints = constraints;
-	Eigen::VectorXf objective(4);
-	objective << 0.5,3,1,4;
+
+//	Eigen::VectorXf objective(4);
+//	objective << 0.5,3,1,4;
+	Eigen::VectorXf objective(2);
+	objective << 3, 2;
+
 	lp.objective = objective;
 	lp.type = LinearProblem::MAX;
 

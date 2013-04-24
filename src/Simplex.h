@@ -19,7 +19,7 @@ public:
 
 
 	Eigen::MatrixXf tab;
-
+	LinearProblem* problem;
 
 	int step;
 
