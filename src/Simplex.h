@@ -28,6 +28,10 @@ public:
 	Eigen::VectorXf run();
 	Eigen::VectorXf best;
 
+
+	Eigen::VectorXi top;
+	Eigen::VectorXi side;
+
 private:
 	int findPivotColumn();
 	int findPivotRow(int column);

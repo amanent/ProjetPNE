@@ -20,6 +20,9 @@ int main(int argc, char **argv) {
 	std::cout << constraints << std::endl;
 	std::cout << objective << std::endl;
 
+	lp.updateSize();
+
+	std::cout << lp.nbConstraints << " contraintes  - " << lp.nbVars << " vars" << std::endl;
 
 	Simplex ss(&lp);
 
@@ -27,7 +30,9 @@ int main(int argc, char **argv) {
 	ss.run();
 	std::cout << std::endl << ss.tab << std::endl;
 
-	std::cout << std::endl << ss.best << std::endl;
+	std::cout << std::endl << ss.best << std::endl << std::endl;
+
+	std::cout << std::endl << ss.side << std::endl;
 
 
 	return 0;

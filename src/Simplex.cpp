@@ -35,6 +35,19 @@ Simplex::Simplex(LinearProblem* lp) : step(0) {
 	}
 
 	best.resize(lp->constraints.cols() - 1);
+
+	top.resize(lp->nbVars + lp->nbConstraints);
+	side.resize(lp->nbConstraints);
+
+
+	for(int i(0); i < lp->nbVars + lp->nbConstraints; ++i)
+		top[i] = i;
+	for(int i(0); i < lp->nbConstraints; ++i)
+		side[i] = i + lp->nbVars;
+/*
+	std::cout << top << std::endl << std::endl;
+	std::cout << side << std::endl;
+*/
 }
 
 Simplex::~Simplex() {
@@ -81,6 +94,8 @@ void Simplex::pivot(int row, int col) {
 			tab(i, j) -= multip * tab(row, j);
 		}
 	}
+	std::cout << row << " " << col << std::endl;
+	side(row-1) = col;
 }
 
 Eigen::VectorXf Simplex::run() {

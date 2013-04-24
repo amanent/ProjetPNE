@@ -10,6 +10,8 @@
 LinearProblem::LinearProblem() {
 	dual = NULL;
 	type = MAX;
+	nbConstraints = 0;
+	nbVars = 0;
 
 }
 
@@ -29,4 +31,9 @@ void LinearProblem::minimize() {
 
 void LinearProblem::maximize() {
 	if(type==MIN) switchMode();
+}
+
+void LinearProblem::updateSize() {
+	nbConstraints = constraints.rows();
+	nbVars = objective.rows();
 }
