@@ -9,14 +9,19 @@
 #include <iostream>
 
 Simplex::Simplex(LinearProblem* lp) : step(0) {
+	std::cout << "creation simplex" << std::endl;
 	// TODO Auto-generated constructor stub
 	problem = lp;
 
 	tab.resize(lp->constraints.rows() + 1, lp->constraints.rows()+ lp->constraints.cols());
-	lp->minimize();
+	/*if(lp->type == LinearProblem::MIN)
+		lp->maximize();*/
+	if(lp->type == LinearProblem::MAX)
+		lp->minimize();
+	//std::cout << "lp apres maximisation " << std::endl << std::endl << lp->objective << std::endl;
 	tab(0,0) = 0;
 
-	for(int i(1); i < lp->constraints.cols(); ++i){
+	for(int i(1); i <= lp->constraints.cols(); ++i){
 		tab(0, i) = lp->objective(i - 1);
 	}
 	for(int i(lp->constraints.cols()); i < tab.cols(); ++i){
@@ -55,6 +60,7 @@ Simplex::~Simplex() {
 }
 
 int Simplex::findPivotColumn() {
+	std::cout << "findpivotcol" << std::endl;
 	int pivot_col(1);
 	float lowest = tab(0, pivot_col);
 	for (int j = 1; j < tab.cols(); ++j) {
@@ -69,6 +75,7 @@ int Simplex::findPivotColumn() {
 }
 
 int Simplex::findPivotRow(int column) {
+	std::cout << "findpivotrow" << std::endl;
 	int pivot_row = 0;
 	float min_ratio = -1;
 	for (int i = 1; i < tab.rows(); ++i) {
@@ -84,6 +91,7 @@ int Simplex::findPivotRow(int column) {
 }
 
 void Simplex::pivot(int row, int col) {
+	std::cout << "tab row " << tab.rows() << "row " << row << " col " << col << std::endl;
 	float pivot = tab(row, col);
 	for(int i(0); i < tab.cols(); ++i)
 		tab(row, i) /= pivot;
@@ -94,16 +102,20 @@ void Simplex::pivot(int row, int col) {
 			tab(i, j) -= multip * tab(row, j);
 		}
 	}
-	std::cout << row << " " << col << std::endl;
+	//std::cout << row << " " << col << std::endl;
 	side(row-1) = col;
 }
 
 Eigen::VectorXf Simplex::run() {
+	std::cout << "simplex" << std::endl;
+	std::cout << tab << std::endl;
 	int piv_col, piv_row;
+	int i(0);
 	while(1){
 		piv_col = findPivotColumn();
 		if(piv_col < 0)
 		{
+			std::cout << "i " << i << std::endl;
 			getBest(); // optimal
 			return best;
 		}
@@ -114,6 +126,7 @@ Eigen::VectorXf Simplex::run() {
 		}
 		pivot(piv_row, piv_col);
 		std::cout << std::endl << std::endl << tab << std::endl;
+		i++;
 	}
 	return best;
 }
@@ -147,7 +160,7 @@ void Simplex::getBest() {
 	for(int i(0); i < best.rows(); ++i)
 		best(i) = 0;
 	for(int i(0); i < side.rows(); ++i){
-		std::cout << side(i) << "  " << tab(i+1, 0) << std::endl;
+		//std::cout << side(i) << "  " << tab(i+1, 0) << std::endl;
 		if(side(i) <= problem->nbVars){
 			best(side(i) - 1) = tab(i+1, 0);
 		}

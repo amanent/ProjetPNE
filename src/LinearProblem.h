@@ -10,6 +10,7 @@
 
 #include "../lib/Eigen/Core"
 #include "Probleme.h"
+#include <iostream>
 
 class LinearProblem {
 public:

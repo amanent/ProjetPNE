@@ -24,7 +24,8 @@ public :
 	BranchAndBound(LinearProblem * lp);
 	void run();
 	int getFirstNonIntegerVar(Eigen::VectorXf best);
-	void step(LinearProblem lp, Eigen::VectorXf vect);
+	bool step(LinearProblem lp, Eigen::VectorXf vect, int step);
+	Eigen::VectorXf getBest(){return best;}
 };
 
 

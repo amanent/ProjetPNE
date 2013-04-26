@@ -42,11 +42,11 @@ bool Probleme::parseur(string nom){
                         this->fct_objective = c;
                     }else{
                         if(tampon[1]=="E"){
-                            c.setType("=");
+                            c.setType("E");
                         }else if(tampon[1]=="G"){
-                            c.setType(">=");
+                            c.setType("G");
                         }else{
-                            c.setType("<=");
+                            c.setType("L");
                         }
                         this->ajouter_contrainte(c);
                     }
