@@ -6,7 +6,7 @@
 
 int main(int argc, char **argv) {
 
-
+	std::cout << "Beginning" << std::endl;
 	LinearProblem lp;
 	Eigen::MatrixXf constraints(3,5);
 	constraints << 40,1,1,1,1,10,-2,-1,1,1,10,0,1,0,-1;
