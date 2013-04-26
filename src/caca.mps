@@ -10,6 +10,6 @@ COLUMNS
 RHS
     rhs       c1                              3
 BOUNDS
- UP bnd       x1                              5
- UP bnd       x2                              5
+ UP bnd       x1                              1
+ UP bnd       x2                              1
 ENDATA
