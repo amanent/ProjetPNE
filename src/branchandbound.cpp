@@ -1,11 +1,24 @@
-//* ce qu'il faut : 
+/*
+ * BranchAndBound.cpp
+ *
+ *  Created on: Apr 21, 2013
+ *      Author: Matthieu
+ */
 
-		recupérer un PL, sous forme de matrice.
-		(transformer le max en min)
-		faire une relaxation (passer de variables discrètes a variables continues)
-		fixer UB a l'infini (+ ou - je ne sais plus)
-boucle:	evaluer le resultat avec la méthode du simplexe + fixer LB/UB (selon quels critères ?)
-		-si les valeurs sont toutes entières : OK
-		-sinon, on fixe une variable (ce qui créée deux branches) et bien sur s'il reste des variables a fixer
-		retour boucle
-*/
+#include "branchandbound.hpp"
+BranchAndBound::BranchAndBound(LinearProblem * lp){
+	this->lp = lp;
+}
+
+void BranchAndBound::reduce_matrix(){
+
+}
+
+void BranchAndBound::run(){
+	/* Pour chaque noeud, faire une eval via le simplex,
+	 * si les valeurs ne sont pas entieres, il faut fixer celles la
+	 * si (dans le cas du min) local bound > lower bound => cut
+	 */
+}
+
+
