@@ -9,6 +9,7 @@
 #define LINEARPROBLEM_H_
 
 #include "../lib/Eigen/Core"
+#include "Probleme.h"
 
 class LinearProblem {
 public:
@@ -16,6 +17,7 @@ public:
 	enum Type{MIN, MAX};
 
 	LinearProblem();
+	LinearProblem(Probleme * p);
 	virtual ~LinearProblem();
 
 	Eigen::MatrixXf constraints;

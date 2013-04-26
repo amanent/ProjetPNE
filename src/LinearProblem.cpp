@@ -14,6 +14,9 @@ LinearProblem::LinearProblem() {
 	nbVars = 0;
 
 }
+LinearProblem::LinearProblem(Probleme * p) {
+
+}
 
 LinearProblem::~LinearProblem() {
 	// TODO Auto-generated destructor stub
