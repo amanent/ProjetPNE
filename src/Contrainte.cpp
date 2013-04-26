@@ -26,15 +26,15 @@ void Contrainte::setNom(std::string n){
     this->nom = n;
 }
 
-std::string Contrainte::getType(){
+std::string Contrainte::getType() const{
     return this->type;
 }
 
-std::string Contrainte::getNom(){
+std::string Contrainte::getNom() const{
     return this->nom;
 }
 
-int Contrainte::getValeurBorne(){
+int Contrainte::getValeurBorne() const{
     return this->valeur_borne;
 }
 

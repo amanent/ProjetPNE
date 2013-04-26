@@ -19,7 +19,7 @@ LinearProblem::LinearProblem(Probleme * p) {
 	dual = NULL;
 	nbConstraints = p->getNbConstraints();
 	nbVars = p->getNbVars();
-
+	int cpt = 0;
 	constraints.resize(nbConstraints, nbVars);
 
 
@@ -27,27 +27,43 @@ LinearProblem::LinearProblem(Probleme * p) {
 		Eigen::VectorXf v;
 		v.resize(nbVars + 1);
 		int i(0);
-		v.row(i++) = it.getValeurBorne();
-		for(auto& itvar : it.variables){
-//			v.row(i++) = itvar.
+		v(i++) = it.getValeurBorne();
+		for(auto & varit : p->getVariables()){
+			auto elem = it.variables.find(varit.getNom());
+			if(elem != it.variables.end())
+				v(i++) = elem->second;
+
+			else
+				v(i++) = 0;
 		}
 
-
-		switch (it.getType()) {
-		case "G":
+		switch (it.getType()[0]) {
+		case 'G':
+			v *= -1;
+			break;
+		case 'L':
 
 			break;
-		case "L":
-
-			break;
-		case "E":
+		case 'E':
 
 			break;
 		default:
 			break;
 		}
+		constraints.row(cpt++) = v;
 	}
 
+	objective.resize(nbVars);
+	Eigen::VectorXf tmp(nbVars);
+	int i(0);
+	for(auto & varit : p->getVariables()){
+		auto elem = p->getFctObjective().variables.find(varit.getNom());
+		if(elem != p->getFctObjective().variables.end())
+			tmp(i++) = elem->second;
+
+		else
+			tmp(i++) = 0;
+	}
 
 }
 

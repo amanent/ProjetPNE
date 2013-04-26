@@ -2,17 +2,19 @@
 #include "LinearProblem.h"
 #include "Simplex.h"
 #include "branchandbound.hpp"
+#include "Probleme.h"
+#include "Contrainte.h"
+#include "Variable.h"
 
 #include <iostream>
 
 int main(int argc, char **argv) {
 
-	std::cout << "Beginning" << std::endl;
-	LinearProblem lp;
+	//LinearProblem lp;
 //	Eigen::MatrixXf constraints(3,5);
 //	constraints << 40,1,1,1,1,10,-2,-1,1,1,10,0,1,0,-1;
 
-	Eigen::MatrixXf constraints(3,3);
+	/*Eigen::MatrixXf constraints(3,3);
 	constraints << 18,2,1,42,2,3,24,3,1;
 	lp.constraints = constraints;
 
@@ -22,7 +24,14 @@ int main(int argc, char **argv) {
 	objective << 3, 2;
 
 	lp.objective = objective;
-	lp.type = LinearProblem::MAX;
+	lp.type = LinearProblem::MAX;*/
+
+	Probleme p;
+	p.parseur("test.mps");
+	//LinearProblem lp(&p);
+
+	//std::cout << lp.constraints << std::endl;
+	//std::cout << lp.objective << std::endl;
 
 
 	/*std::cout << constraints << std::endl;
@@ -43,7 +52,7 @@ int main(int argc, char **argv) {
 	std::cout << std::endl << ss.side << std::endl;
 	*/
 
-	BranchAndBound * b = new BranchAndBound(&lp);
+	/*BranchAndBound * b = new BranchAndBound(&lp);
 
 	Eigen::VectorXf vect(4);
 	vect << 1,2,2.3,4;
@@ -51,7 +60,7 @@ int main(int argc, char **argv) {
 	std::cout << b->getFirstNonIntegerVar(vect) << std::endl;
 
 	delete b;
-
+	*/
 	return 0;
 
 }

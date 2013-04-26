@@ -25,7 +25,7 @@ void Variable::setBorne(int b){
     this->borne = b;
 }
 
-std::string Variable::getNom(){
+std::string Variable::getNom() const{
     return this->nom;
 }
 
