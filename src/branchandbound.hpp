@@ -13,6 +13,7 @@
 #include <vector>
 #include <climits>
 #include <iostream>
+#include <algorithm>
 
 class BranchAndBound{
 private :
@@ -24,7 +25,8 @@ public :
 	BranchAndBound(LinearProblem * lp);
 	void run();
 	int getFirstNonIntegerVar(Eigen::VectorXf best);
-	bool step(LinearProblem lp, Eigen::VectorXf vect, int step);
+	bool step(LinearProblem lp, Eigen::VectorXf vect, int step, std::vector<int> vars_set);
+	int getFirstNonIntegerVar(Eigen::VectorXf best, std::vector<int> & vars_set);
 	Eigen::VectorXf getBest(){return best;}
 };
 

@@ -9,7 +9,6 @@
 #include <iostream>
 
 Simplex::Simplex(LinearProblem* lp) : step(0) {
-	std::cout << "creation simplex" << std::endl;
 	// TODO Auto-generated constructor stub
 	problem = lp;
 
@@ -60,7 +59,6 @@ Simplex::~Simplex() {
 }
 
 int Simplex::findPivotColumn() {
-	std::cout << "findpivotcol" << std::endl;
 	int pivot_col(1);
 	float lowest = tab(0, pivot_col);
 	for (int j = 1; j < tab.cols(); ++j) {
@@ -75,7 +73,6 @@ int Simplex::findPivotColumn() {
 }
 
 int Simplex::findPivotRow(int column) {
-	std::cout << "findpivotrow" << std::endl;
 	int pivot_row = 0;
 	float min_ratio = -1;
 	for (int i = 1; i < tab.rows(); ++i) {
@@ -91,7 +88,6 @@ int Simplex::findPivotRow(int column) {
 }
 
 void Simplex::pivot(int row, int col) {
-	std::cout << "tab row " << tab.rows() << "row " << row << " col " << col << std::endl;
 	float pivot = tab(row, col);
 	for(int i(0); i < tab.cols(); ++i)
 		tab(row, i) /= pivot;
@@ -107,15 +103,13 @@ void Simplex::pivot(int row, int col) {
 }
 
 Eigen::VectorXf Simplex::run() {
-	std::cout << "simplex" << std::endl;
-	std::cout << tab << std::endl;
 	int piv_col, piv_row;
+	std::cout << std::endl << tab << std::endl;
 	int i(0);
 	while(1){
 		piv_col = findPivotColumn();
 		if(piv_col < 0)
 		{
-			std::cout << "i " << i << std::endl;
 			getBest(); // optimal
 			return best;
 		}
@@ -125,7 +119,6 @@ Eigen::VectorXf Simplex::run() {
 			break; //caca
 		}
 		pivot(piv_row, piv_col);
-		std::cout << std::endl << std::endl << tab << std::endl;
 		i++;
 	}
 	return best;

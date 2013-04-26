@@ -29,10 +29,10 @@ std::string Variable::getNom() const{
     return this->nom;
 }
 
-std::string Variable::getBounds(){
+std::string Variable::getBounds() const{
     return this->bounds;
 }
 
-int Variable::getBorne(){
+int Variable::getBorne() const{
     return this->borne;
 }

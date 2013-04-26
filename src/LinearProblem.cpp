@@ -21,7 +21,7 @@ LinearProblem::LinearProblem(Probleme * p) {
 	nbConstraints = p->getNbConstraints();
 	nbVars = p->getNbVars();
 	int cpt = 0;
-	constraints.resize(nbConstraints + nbVars, nbVars + 1);
+	constraints.resize(nbConstraints + 2*nbVars, nbVars + 1);
 	for(auto& it : p->getContraintes()){
 		Eigen::VectorXf v;
 		v.resize(nbVars + 1);
@@ -58,6 +58,20 @@ LinearProblem::LinearProblem(Probleme * p) {
 		for(int k = 0; k < nbVars; k++){
 			if(k == i)
 				tmp1(j++) = -1;
+			else
+				tmp1(j++) = 0;
+		}
+		constraints.row(cpt++) = tmp1;
+		nbConstraints++;
+	}
+
+	for(auto & i : p->getVariables()){
+		Eigen::VectorXf tmp1(nbVars+1);
+		int j(0);
+		tmp1(j++) = i.getBorne();
+		for(auto & k : p->getVariables()){
+			if(k.getNom() == i.getNom())
+				tmp1(j++) = 1;
 			else
 				tmp1(j++) = 0;
 		}

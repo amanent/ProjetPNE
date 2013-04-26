@@ -15,8 +15,8 @@ class Variable
         void setBounds(std::string b);
         void setBorne(int b);
         std::string getNom() const;
-        std::string getBounds();
-        int getBorne();
+        std::string getBounds() const;
+        int getBorne() const;
     protected:
     private:
         std::string nom;
