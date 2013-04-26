@@ -15,7 +15,7 @@ BranchAndBound::BranchAndBound(LinearProblem * lp){
 }
 
 int BranchAndBound::getFirstNonIntegerVar(Eigen::VectorXf best){
-	for(int i =1; i <= best.SizeMinusOne; i++){
+	for(int i =1; i < best.rows(); i++){
 		int tmp = (int)best[i];
 		if((float)tmp != best[i]){
 			return tmp;

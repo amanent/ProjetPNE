@@ -1,6 +1,7 @@
 #include "../lib/Eigen/Core"
 #include "LinearProblem.h"
 #include "Simplex.h"
+#include "branchandbound.hpp"
 
 #include <iostream>
 
@@ -24,7 +25,7 @@ int main(int argc, char **argv) {
 	lp.type = LinearProblem::MAX;
 
 
-	std::cout << constraints << std::endl;
+	/*std::cout << constraints << std::endl;
 	std::cout << objective << std::endl;
 
 	lp.updateSize();
@@ -40,7 +41,16 @@ int main(int argc, char **argv) {
 	std::cout << std::endl << ss.best << std::endl << std::endl;
 
 	std::cout << std::endl << ss.side << std::endl;
+	*/
 
+	BranchAndBound * b = new BranchAndBound(&lp);
+
+	Eigen::VectorXf vect(4);
+	vect << 1,2,2.3,4;
+
+	std::cout << b->getFirstNonIntegerVar(vect) << std::endl;
+
+	delete b;
 
 	return 0;
 
