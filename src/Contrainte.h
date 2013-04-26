@@ -12,9 +12,9 @@ class Contrainte
         void setType(std::string t);
         void setNom(std::string n);
         void setValeurBorne(int n);
-        std::string getType();
-        std::string getNom();
-        int getValeurBorne();
+        std::string getType() const;
+        std::string getNom() const;
+        int getValeurBorne() const;
         void ajouter_variable(std::string nom, int coefficient);
         std::map<std::string,int> variables;
     protected:
