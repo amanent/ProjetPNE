@@ -15,6 +15,39 @@ LinearProblem::LinearProblem() {
 
 }
 LinearProblem::LinearProblem(Probleme * p) {
+	type = MIN;
+	dual = NULL;
+	nbConstraints = p->getNbConstraints();
+	nbVars = p->getNbVars();
+
+	constraints.resize(nbConstraints, nbVars);
+
+
+	for(auto& it : p->getContraintes()){
+		Eigen::VectorXf v;
+		v.resize(nbVars + 1);
+		int i(0);
+		v.row(i++) = it.getValeurBorne();
+		for(auto& itvar : it.variables){
+//			v.row(i++) = itvar.
+		}
+
+
+		switch (it.getType()) {
+		case "G":
+
+			break;
+		case "L":
+
+			break;
+		case "E":
+
+			break;
+		default:
+			break;
+		}
+	}
+
 
 }
 
