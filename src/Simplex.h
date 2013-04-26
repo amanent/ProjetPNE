@@ -19,7 +19,7 @@ public:
 
 
 	Eigen::MatrixXf tab;
-
+	LinearProblem* problem;
 
 	int step;
 
@@ -27,6 +27,10 @@ public:
 
 	Eigen::VectorXf run();
 	Eigen::VectorXf best;
+
+
+	Eigen::VectorXi top;
+	Eigen::VectorXi side;
 
 private:
 	int findPivotColumn();

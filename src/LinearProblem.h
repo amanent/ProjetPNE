@@ -22,12 +22,19 @@ public:
 	Eigen::VectorXf objective;
 	Type type;
 
+	int nbVars;
+	int nbConstraints;
+
 	LinearProblem* createDual();
 	LinearProblem* dual;
 
 	void switchMode();
 	void minimize();
 	void maximize();
+	void updateSize();
+
+private:
+
 
 };
 
