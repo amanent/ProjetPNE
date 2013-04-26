@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
 
 	 */
 	Probleme p;
-	p.parseur("iis-bupa-cov.mps");
+	p.parseur("caca.mps");
 	//p.parseur("caca.mps");
 	//p.parseur("test.mps");
 	LinearProblem lp(&p);
