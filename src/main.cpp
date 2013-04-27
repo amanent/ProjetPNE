@@ -52,16 +52,31 @@ int main(int argc, char **argv) {
 
 	 */
 	Probleme p;
-	p.parseur("caca.mps");
+	//p.parseur("iis-pima-cov.mps");
 	//p.parseur("caca.mps");
+	p.parseur("momo.mps");
 	//p.parseur("test.mps");
+	std::cout << " done" << std::endl;
 	LinearProblem lp(&p);
+	std::cout << " done" << std::endl;
 	std::ofstream resultat("lp.txt", std::ios::out);
-
+	std::cout << "Ecriture dans le fichier...";
 	resultat << lp.constraints << std::endl;
-	std::cout <<"Fonction objectif " << std::endl << lp.objective << std::endl;
+	resultat <<"Fonction objectif " << std::endl << lp.objective << std::endl;
 	resultat.close();
+	std::cout << " done" << std::endl;
 
+	BranchAndBound * b = new BranchAndBound(&lp);
+
+	b->run();
+	std::cout << " done" << std::endl;
+	std::ofstream res("results.txt", std::ios::out);
+	std::cout << "Ecriture des résultats dans le ficher...";
+	res << "Best " << std::endl <<  b->getBest() << std::endl;
+	res  << "Objective best result " << b->getBestResult() << std::endl;
+	std::cout << " done" << std::endl;
+	std::cout << "Objective best result " << b->getBestResult() << std::endl;
+	delete b;
 
 	/*std::cout << constraints << std::endl;
 	std::cout << objective << std::endl;
@@ -83,17 +98,11 @@ int main(int argc, char **argv) {
 	//std::cout << std::endl << ss.side << std::endl;
 
 
-	BranchAndBound * b = new BranchAndBound(&lp);
 
 	//Eigen::VectorXf vect(4);
 	//vect << 1,2,2.3,4;
-
-	b->run();
-
-	std::cout << "Best " << std::endl <<  b->getBest() << std::endl;
 	//std::cout << b->getFirstNonIntegerVar(vect) << std::endl;
 
-	delete b;
 
 	return 0;
 

@@ -20,7 +20,7 @@ Simplex::Simplex(LinearProblem* lp) : step(0) {
 	//std::cout << "lp apres maximisation " << std::endl << std::endl << lp->objective << std::endl;
 	tab(0,0) = 0;
 
-	for(int i(1); i <= lp->constraints.cols(); ++i){
+	for(int i(1); i < lp->constraints.cols(); ++i){
 		tab(0, i) = lp->objective(i - 1);
 	}
 	for(int i(lp->constraints.cols()); i < tab.cols(); ++i){
@@ -48,6 +48,7 @@ Simplex::Simplex(LinearProblem* lp) : step(0) {
 		top[i] = i;
 	for(int i(0); i < lp->nbConstraints; ++i)
 		side[i] = i + lp->nbVars;
+
 /*
 	std::cout << top << std::endl << std::endl;
 	std::cout << side << std::endl;
@@ -104,7 +105,7 @@ void Simplex::pivot(int row, int col) {
 
 Eigen::VectorXf Simplex::run() {
 	int piv_col, piv_row;
-	std::cout << std::endl << tab << std::endl;
+	//std::cout << std::endl << tab << std::endl;
 	int i(0);
 	while(1){
 		piv_col = findPivotColumn();

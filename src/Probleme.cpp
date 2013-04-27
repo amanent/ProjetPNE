@@ -6,7 +6,8 @@ using namespace std;
 
 Probleme::Probleme()
 {
-
+	contraintes.reserve(500000);
+	variables.reserve(500000);
 }
 
 Probleme::~Probleme()
@@ -16,6 +17,7 @@ Probleme::~Probleme()
 
 
 bool Probleme::parseur(string nom){
+	std::cout << "Parsing...";
     ofstream resultat("parseur2.txt", ios::out);
     string line;
     vector<string> tampon;
@@ -23,7 +25,6 @@ bool Probleme::parseur(string nom){
 	ifstream fichier(nom.c_str(), ios_base::in);
 	/*Si le flux du fichier existe*/
 	if(fichier){
-
 		/*Tant qu'il existe des lignes à lire dans mon fichier*/
 		while(getline(fichier, line)){
             if(!line.find("NAME")){

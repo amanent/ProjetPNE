@@ -28,6 +28,7 @@ public :
 	bool step(LinearProblem lp, Eigen::VectorXf vect, int step, std::vector<int> vars_set);
 	int getFirstNonIntegerVar(Eigen::VectorXf best, std::vector<int> & vars_set);
 	Eigen::VectorXf getBest(){return best;}
+	float getBestResult();
 };
 
 

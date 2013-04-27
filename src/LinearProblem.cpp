@@ -15,8 +15,8 @@ LinearProblem::LinearProblem() {
 
 }
 LinearProblem::LinearProblem(Probleme * p) {
-	std::cout << "creation pl" << std::endl;
-	type = MIN;
+	std::cout << "Creation du probleme lineaire...";
+	type = MAX;
 	dual = NULL;
 	nbConstraints = p->getNbConstraints();
 	nbVars = p->getNbVars();
