@@ -52,15 +52,29 @@ int main(int argc, char **argv) {
 
 	 */
 	Probleme p;
-	//p.parseur("iis-pima-cov.mps");
-	//p.parseur("caca.mps");
-	p.parseur("momo.mps");
-	//p.parseur("test.mps");
+
+	/*p.parseur("iis-pima-cov.mps");
 	std::cout << " done" << std::endl;
-	LinearProblem lp(&p);
+	LinearProblem lp(&p,LinearProblem::MIN);
+	std::cout << " done" << std::endl;*/
+
+	p.parseur("caca.mps");
 	std::cout << " done" << std::endl;
+	LinearProblem lp(&p,LinearProblem::MIN);
+	std::cout << " done" << std::endl;
+
+	/*p.parseur("momo.mps");
+	std::cout << " done" << std::endl;
+	LinearProblem lp(&p,LinearProblem::MAX);
+	std::cout << " done" << std::endl;*/
+
+	/*p.parseur("macrophage.mps");
+	std::cout << " done" << std::endl;
+	LinearProblem lp(&p,LinearProblem::MIN);
+	std::cout << " done" << std::endl;*/
+
 	std::ofstream resultat("lp.txt", std::ios::out);
-	std::cout << "Ecriture dans le fichier...";
+	std::cout << "Ecriture du probleme lineaire dans le fichier lp.txt...";
 	resultat << lp.constraints << std::endl;
 	resultat <<"Fonction objectif " << std::endl << lp.objective << std::endl;
 	resultat.close();
@@ -71,11 +85,11 @@ int main(int argc, char **argv) {
 	b->run();
 	std::cout << " done" << std::endl;
 	std::ofstream res("results.txt", std::ios::out);
-	std::cout << "Ecriture des résultats dans le ficher...";
+	std::cout << "Ecriture des resultats dans le ficher results.txt...";
 	res << "Best " << std::endl <<  b->getBest() << std::endl;
 	res  << "Objective best result " << b->getBestResult() << std::endl;
 	std::cout << " done" << std::endl;
-	std::cout << "Objective best result " << b->getBestResult() << std::endl;
+	std::cout << "Meilleur resultat " << b->getBestResult() << std::endl;
 	delete b;
 
 	/*std::cout << constraints << std::endl;

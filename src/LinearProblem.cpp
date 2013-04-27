@@ -14,9 +14,9 @@ LinearProblem::LinearProblem() {
 	nbVars = 0;
 
 }
-LinearProblem::LinearProblem(Probleme * p) {
+LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t) {
 	std::cout << "Creation du probleme lineaire...";
-	type = MAX;
+	type = t;
 	dual = NULL;
 	nbConstraints = p->getNbConstraints();
 	nbVars = p->getNbVars();
@@ -37,6 +37,7 @@ LinearProblem::LinearProblem(Probleme * p) {
 		switch (it.getType().c_str()[0]) {
 		case 'G':
 			v *= -1;
+			v(0) -= 1;
 			break;
 		case 'L':
 

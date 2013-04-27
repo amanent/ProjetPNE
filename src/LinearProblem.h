@@ -18,7 +18,7 @@ public:
 	enum Type{MIN, MAX};
 
 	LinearProblem();
-	LinearProblem(Probleme * p);
+	LinearProblem(Probleme * p, LinearProblem::Type t);
 	virtual ~LinearProblem();
 
 	Eigen::MatrixXf constraints;

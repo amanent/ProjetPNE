@@ -17,7 +17,7 @@ Probleme::~Probleme()
 
 
 bool Probleme::parseur(string nom){
-	std::cout << "Parsing...";
+	std::cout << "Parsage du fichier "<< nom <<"...";
     ofstream resultat("parseur2.txt", ios::out);
     string line;
     vector<string> tampon;

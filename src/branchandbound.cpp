@@ -97,8 +97,7 @@ void BranchAndBound::run(){
 				else
 					vect[i] = 0;
 			}
-			if(this->step(lp,vect, step_max - 1, vars_set))
-				break;
+			this->step(lp,vect, step_max - 1, vars_set);
 		}
 	}
 
@@ -133,7 +132,7 @@ bool BranchAndBound::step(LinearProblem lp, Eigen::VectorXf vect, int step, std:
 			globalBound = localBound;
 		}
 	}else{
-		if(localBound < globalBound){
+		if(localBound <= globalBound){
 			return false;
 		}else{
 			this->best = ss.best;
