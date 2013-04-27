@@ -25,7 +25,7 @@ int BranchAndBound::getFirstNonIntegerVar(Eigen::VectorXf best){
 }
 
 int BranchAndBound::getFirstNonIntegerVar(Eigen::VectorXf best, std::vector<int> & vars_set){
-	for(int i =1; i < best.rows(); i++){
+	for(int i = 1; i < best.rows(); i++){
 		int tmp = (int)best[i];
 		if((float)tmp != best[i] && std::find(vars_set.begin(), vars_set.end(), i + 1) == vars_set.end()){
 			return i;
@@ -57,6 +57,7 @@ void BranchAndBound::run(){
 
 	// on récupère la première variable non entier renvoyer par le simplex
 	int res = this->getFirstNonIntegerVar(ss.best) + 1;
+	std::cout << res << std::endl;
 	// on la met dans le vecteur vars_set car on va maintenant la fixer
 	vars_set.push_back(res);
 	//std::cout << "simplex best " << std::endl << ss.best << std::endl;
@@ -131,7 +132,7 @@ void BranchAndBound::run(){
 }
 
 bool BranchAndBound::step(LinearProblem lp, Eigen::VectorXf vect, int step, std::vector<int>  vars_set){
-	//std::cout << "************** STEP " << (lp.nbVars - step) << " ***************" << std::endl;
+	std::cout << "************** STEP " << (lp.nbVars - step) << " ***************" << std::endl;
 	//std::cout << "rows : " << lp.constraints.rows() << std::endl;
 
 	/*
@@ -150,6 +151,7 @@ bool BranchAndBound::step(LinearProblem lp, Eigen::VectorXf vect, int step, std:
 	ss.run();
 
 	// de même que pour la méthode run, on calcule la valeur de la fonction objective avec le vecteur renvoyé par le simplex
+	// tout en vérifiant qu'elle n'a pas déjà été fixée
 	int res = this->getFirstNonIntegerVar(ss.best, vars_set) + 1;
 	int localBound;
 	//std::cout << "simplex best " << std::endl << ss.best << std::endl;
@@ -245,6 +247,7 @@ float BranchAndBound::getBestResult(){
 	Eigen::VectorXf tmp(this->best.rows());
 	for(int i = 0; i < this->best.rows(); i++){
 		tmp.row(i) = this->best.row(i) * this->lp->objective.row(i);
+		//std::cout << this->best.row(i) << "*" << this->lp->objective.row(i) << std::endl;
 	}
-	return tmp.sum();
+	return (float)tmp.sum();
 }

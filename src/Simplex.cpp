@@ -13,8 +13,8 @@ Simplex::Simplex(LinearProblem* lp) : step(0) {
 	problem = lp;
 
 	tab.resize(lp->constraints.rows() + 1, lp->constraints.rows()+ lp->constraints.cols());
-	/*if(lp->type == LinearProblem::MIN)
-		lp->maximize();*/
+	if(lp->type == LinearProblem::MIN)
+		lp->maximize();
 	if(lp->type == LinearProblem::MAX)
 		lp->minimize();
 	//std::cout << "lp apres maximisation " << std::endl << std::endl << lp->objective << std::endl;
@@ -99,7 +99,6 @@ void Simplex::pivot(int row, int col) {
 			tab(i, j) -= multip * tab(row, j);
 		}
 	}
-	//std::cout << row << " " << col << std::endl;
 	side(row-1) = col;
 }
 
