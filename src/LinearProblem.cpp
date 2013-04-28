@@ -142,3 +142,13 @@ void LinearProblem::updateSize() {
 	nbConstraints = constraints.rows();
 	nbVars = objective.rows();
 }
+
+LinearProblem::LinearProblem(string fileName) {
+	std::ifstream input = new std::ifstream(fileName.c_str(), ios_base::in);
+	std::string buffer;
+
+	if(!input.good()) {
+		cerr << "unable to read file" << std::endl;
+		exit(-1);
+
+}
