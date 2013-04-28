@@ -1,23 +1,20 @@
 /*
  * Simplex.cpp
  *
- *  Created on: 3 avr. 2013
- *      Author: Arnaud
+ * Created on: 3 avr. 2013
+ * Author: Arnaud
  */
 
 #include "Simplex.h"
 #include <iostream>
 
-Simplex::Simplex(LinearProblem* lp) : step(0) {
+Simplex::Simplex(LinearProblem* lp , bool t) : step(0) {
 	// TODO Auto-generated constructor stub
 	problem = lp;
+	this->isPrimal = t;
 
 	tab.resize(lp->constraints.rows() + 1, lp->constraints.rows()+ lp->constraints.cols());
-	/*if(lp->type == LinearProblem::MIN)
-		lp->maximize();*/
-	if(lp->type == LinearProblem::MAX)
-		lp->minimize();
-	//std::cout << "lp apres maximisation " << std::endl << std::endl << lp->objective << std::endl;
+	lp->minimize();
 	tab(0,0) = 0;
 
 	for(int i(1); i < lp->constraints.cols(); ++i){
@@ -37,8 +34,10 @@ Simplex::Simplex(LinearProblem* lp) : step(0) {
 		for(int j=1; j<tab.rows(); j++)
 			tab(i, j + lp->constraints.cols()-1) = (i==j);
 	}
-
-	best.resize(lp->constraints.cols() - 1);
+	if (this->isPrimal)
+		best.resize(lp->constraints.cols() - 1);
+	else
+		best.resize(lp->nbConstraints);
 
 	top.resize(lp->nbVars + lp->nbConstraints);
 	side.resize(lp->nbConstraints);
@@ -48,11 +47,6 @@ Simplex::Simplex(LinearProblem* lp) : step(0) {
 		top[i] = i;
 	for(int i(0); i < lp->nbConstraints; ++i)
 		side[i] = i + lp->nbVars;
-
-/*
-	std::cout << top << std::endl << std::endl;
-	std::cout << side << std::endl;
-*/
 }
 
 Simplex::~Simplex() {
@@ -78,7 +72,7 @@ int Simplex::findPivotRow(int column) {
 	float min_ratio = -1;
 	for (int i = 1; i < tab.rows(); ++i) {
 		float ratio = tab(i, 0) / tab(i, column);
-		if ( (ratio > 0  && ratio < min_ratio ) || min_ratio < 0 ) {
+		if ( (ratio > 0 && ratio < min_ratio ) || min_ratio < 0 ) {
 			min_ratio = ratio;
 			pivot_row = i;
 		}
@@ -99,28 +93,33 @@ void Simplex::pivot(int row, int col) {
 			tab(i, j) -= multip * tab(row, j);
 		}
 	}
-	//std::cout << row << " " << col << std::endl;
 	side(row-1) = col;
 }
 
 Eigen::VectorXf Simplex::run() {
 	int piv_col, piv_row;
-	//std::cout << std::endl << tab << std::endl;
-	int i(0);
 	while(1){
 		piv_col = findPivotColumn();
+		std::cout << " CHOIX PIVOT " << std::endl;
+		std::cout << " simplexe run piv_col : "<< piv_col << std::endl;
 		if(piv_col < 0)
 		{
+			std::cout<< " STOP " << std::endl;
 			getBest(); // optimal
 			return best;
 		}
 		piv_row = findPivotRow(piv_col);
+		std::cout << " simplexe run piv_row : " << piv_row << std::endl;
+
 		if(piv_row < 0)
 		{
+			std::cout << " Pas de solution" << std::endl;
 			break; //caca
 		}
+		std::cout << " val pivot : " << tab(piv_row,piv_col);
+		std::cout << " " << std::endl;
 		pivot(piv_row, piv_col);
-		i++;
+		std::cout << tab << std::endl;
 	}
 	return best;
 }
@@ -130,7 +129,7 @@ int Simplex::find_basis_variable(int col) {
 	for(i=1; i < tab.rows(); i++) {
 		if (tab(i, col) == 1 ) {
 			if (xi == -1)
-				xi=i;   // found first '1', save this row number.
+				xi=i; // found first '1', save this row number.
 			else
 				return -1; // found second '1', not an identity matrix.
 
@@ -142,23 +141,19 @@ int Simplex::find_basis_variable(int col) {
 }
 
 void Simplex::getBest() {
-/*	int xi;
-	for (int j = 0, i(0); j < tab.cols(); ++j) {
-		xi = find_basis_variable(j);
-		if(xi != -1)
-			best(i++) = tab(xi, 0);
-		//else
-			//best(j) = 0;
-	}
-*/
-	for(int i(0); i < best.rows(); ++i)
-		best(i) = 0;
-	for(int i(0); i < side.rows(); ++i){
-		//std::cout << side(i) << "  " << tab(i+1, 0) << std::endl;
-		if(side(i) <= problem->nbVars){
-			best(side(i) - 1) = tab(i+1, 0);
+	if (this->isPrimal){
+		for(int i(0); i < best.rows(); ++i)
+			best(i) = 0;
+		for(int i(0); i < side.rows(); ++i){
+			if(side(i) <= problem->nbVars){
+				best(side(i) - 1) = tab(i+1, 0);
+			}
 		}
 	}
-
-
+	else
+	{
+		for(int i(0); i < best.rows(); ++i){
+			best(i) = tab(0,this->problem->nbVars+i);
+		}
+	}
 }

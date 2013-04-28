@@ -52,16 +52,22 @@ void BranchAndBound::run(){
 	int step_max = lp.nbVars;
 
 	// On créer le simplex et on le fait tourner
-	Simplex ss(&lp);
+	Simplex ss(&lp,true);
+	std::cout << ss.tab << std::endl;
 	ss.run();
 
-	// on récupère la première variable non entier renvoyer par le simplex
-	int res = this->getFirstNonIntegerVar(ss.best) + 1;
+	std::cout << ss.best << std::endl;
+	/*std::cout << "ok"<< std::endl;
+
+	// on récupère la première variable non entiere renvoyée par le simplex
+	int res = this->getFirstNonIntegerVar(ss.best);
+
+	std::cout << " indice premiere val non entiere :" << res <<std::endl;
 	// on la met dans le vecteur vars_set car on va maintenant la fixer
 	vars_set.push_back(res);
 	//std::cout << "simplex best " << std::endl << ss.best << std::endl;
 
-	std::cout << "b&b... ";
+	std::cout << "b&b... " <<std::endl;
 
 	// si res renvoi -1 ce la signifie qu'on a pas de var non entiere dans le vecteur donc on s'arrete
 	if(res == -1){
@@ -73,7 +79,7 @@ void BranchAndBound::run(){
 		int obj;
 		int coeff;
 		// on effectue deux tours de boucle, une pour mettre a 0 (k=0) et une pour mettre a 1 (k=1)
-		for(int k = 0; k <= 1; k++){
+		for(int k = 0; k <= 0; k++){
 			// on créer le vecteur qui va représenter cette contrainte
 			Eigen::VectorXf vect = Eigen::VectorXf(lp.constraints.cols());
 			// POur mettre a 0 une var, il faut mettre l'objectif a 0 et le coefficient de la variable a 1 (x <= 0)
@@ -92,11 +98,14 @@ void BranchAndBound::run(){
 			for(int i = 0 ; i < lp.constraints.cols(); i++){
 				if(i == 0)
 					vect[i] = obj;
-				else if (i == res)
+				else if (i == res+1)
 					vect[i] = coeff;
 				else
 					vect[i] = 0;
 			}
+
+			std::cout << "vecteur contrainte : " <<std::endl;
+			std::cout << vect <<std::endl;
 			// on effectue une étape du branch and bound
 			if(this->step(lp,vect, step_max - 1, vars_set)){
 				// on calcule la valeur de la fonction objective avec le meilleur vecteur
@@ -127,7 +136,7 @@ void BranchAndBound::run(){
 		}
 	}
 
-	//std::cout << "Best : " << this->best << std::endl;
+	//std::cout << "Best : " << this->best << std::endl;*/
 }
 
 bool BranchAndBound::step(LinearProblem lp, Eigen::VectorXf vect, int step, std::vector<int>  vars_set){
@@ -141,13 +150,16 @@ bool BranchAndBound::step(LinearProblem lp, Eigen::VectorXf vect, int step, std:
 	lp.constraints.row(lp.constraints.rows() - 1) = vect;
 	lp.nbConstraints = lp.constraints.rows();
 
-
-
+	std::cout << "Matrice de contraintes : "<<  lp.constraints <<std::endl;
 	//std::cout << lp.constraints << std::endl;
 
 	// on créer un simplex que l'on fait tourner
-	Simplex ss(&lp);
+	Simplex ss(&lp,true);
+	std::cout << ss.tab << std::endl;
 	ss.run();
+	std::cout << ss.tab << std::endl;
+
+	std::cout << ss.best << std::endl;
 
 	// de même que pour la méthode run, on calcule la valeur de la fonction objective avec le vecteur renvoyé par le simplex
 	int res = this->getFirstNonIntegerVar(ss.best, vars_set) + 1;

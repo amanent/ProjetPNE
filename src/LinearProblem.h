@@ -8,7 +8,7 @@
 #ifndef LINEARPROBLEM_H_
 #define LINEARPROBLEM_H_
 
-#include "../lib/Eigen/Core"
+#include "./lib/Eigen/Core"
 #include "Probleme.h"
 #include <iostream>
 
@@ -19,6 +19,7 @@ public:
 
 	LinearProblem();
 	LinearProblem(Probleme * p, LinearProblem::Type t);
+	LinearProblem dualize(LinearProblem::Type t);
 	virtual ~LinearProblem();
 
 	Eigen::MatrixXf constraints;

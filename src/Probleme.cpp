@@ -18,21 +18,18 @@ Probleme::~Probleme()
 
 bool Probleme::parseur(string nom){
 	std::cout << "Parsage du fichier "<< nom <<"...";
-    ofstream resultat("parseur2.txt", ios::out);
     string line;
     vector<string> tampon;
-    //On n'ouvre le fichier que l'on doit lire
+    //On ouvre le fichier que l'on doit lire
 	ifstream fichier(nom.c_str(), ios_base::in);
-	/*Si le flux du fichier existe*/
 	if(fichier){
-		/*Tant qu'il existe des lignes à lire dans mon fichier*/
 		while(getline(fichier, line)){
             if(!line.find("NAME")){
                 tampon = SegmentselonSymbole(line, " ");
                 this->name = tampon[1];
             }
             else if(!line.find("ROWS")){
-                getline(fichier, line);
+            	getline(fichier, line);
                 while(line.find("COLUMNS")){
                     tampon = SegmentselonSymbole(line, " ");
                     Contrainte c;
@@ -129,7 +126,6 @@ vector<string> Probleme::SegmentselonSymbole(string str, string symbole){
 		listeString.push_back(str);
 
 	return listeString;
-
 }
 
 void Probleme::ajouter_contrainte(Contrainte c){

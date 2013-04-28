@@ -8,13 +8,13 @@
 #ifndef SIMPLEX_H_
 #define SIMPLEX_H_
 
-#include "../lib/Eigen/Core"
+#include "./lib/Eigen/Core"
 #include <utility>
 #include "LinearProblem.h"
 
 class Simplex {
 public:
-	Simplex(LinearProblem* lp);
+	Simplex(LinearProblem* lp ,bool t);
 	virtual ~Simplex();
 
 
@@ -22,6 +22,7 @@ public:
 	LinearProblem* problem;
 
 	int step;
+	bool isPrimal;
 
 //	std::pair<int, int> pivot;
 
