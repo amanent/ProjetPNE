@@ -18,10 +18,10 @@ LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t) {
 	std::cout << "Creation du probleme lineaire...";
 	type = t;
 	dual = NULL;
+	nbConstraints = p->getNbConstraints();
 	nbVars = p->getNbVars();
-	nbConstraints = p->getNbConstraints()+ nbVars*2;
 	int cpt = 0;
-	constraints.resize(nbConstraints, nbVars + 1);
+	constraints.resize(nbConstraints + 2*nbVars, nbVars + 1);
 	for(auto& it : p->getContraintes()){
 		Eigen::VectorXf v;
 		v.resize(nbVars + 1);
@@ -37,6 +37,7 @@ LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t) {
 		switch (it.getType().c_str()[0]) {
 		case 'G':
 			v *= -1;
+			v(0) -= 1;
 			break;
 		case 'L':
 
@@ -62,6 +63,7 @@ LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t) {
 				tmp1(j++) = 0;
 		}
 		constraints.row(cpt++) = tmp1;
+		nbConstraints++;
 	}
 
 	for(auto & i : p->getVariables()){
@@ -75,7 +77,10 @@ LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t) {
 				tmp1(j++) = 0;
 		}
 		constraints.row(cpt++) = tmp1;
+		nbConstraints++;
 	}
+
+
 
 	objective.resize(nbVars);
 	Eigen::VectorXf tmp(nbVars);

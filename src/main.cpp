@@ -53,15 +53,15 @@ int main(int argc, char **argv) {
 	 */
 	Probleme p;
 
-	p.parseur("iis-bupa-cov.mps");
-	std::cout << " done" << std::endl;
-	LinearProblem lp(&p,LinearProblem::MIN);
-	std::cout << " done" << std::endl;
-
-	/*p.parseur("caca.mps");
+	/*p.parseur("iis-pima-cov.mps");
 	std::cout << " done" << std::endl;
 	LinearProblem lp(&p,LinearProblem::MIN);
 	std::cout << " done" << std::endl;*/
+
+	p.parseur("caca.mps");
+	std::cout << " done" << std::endl;
+	LinearProblem lp(&p,LinearProblem::MIN);
+	std::cout << " done" << std::endl;
 
 	/*p.parseur("momo.mps");
 	std::cout << " done" << std::endl;
