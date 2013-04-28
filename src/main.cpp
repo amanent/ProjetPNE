@@ -1,4 +1,4 @@
-#include "./lib/Eigen/Core"
+#include "../lib/Eigen/Core"
 #include "LinearProblem.h"
 #include "Simplex.h"
 #include "branchandbound.hpp"
@@ -68,8 +68,16 @@ int main(int argc, char **argv) {
 
 	/****************************** DUALIZATION SUR PROBLEM TYPE min x+y ( fichier momo.mps )**********************/
 
+	 /* PROBLEM : MIN 21x + 14y
+	   *    2x + 3y >=12
+	   *    3x + y >= 6
+	   *    x + 3y >= 9
+	   *    y >= 0
+	   *    x >= 0
+	   * RESULTAT ATTENDU x = 6/7 , y = 24/7 | MIN = 66 ( Resultat sur à 100% )
+	 */
 
-	/*std::cout << " PROBLEME MIN AVEC DUALIZATION " << std::endl;
+	std::cout << " PROBLEME MIN AVEC DUALIZATION " << std::endl;
 	Probleme p;
 	p.parseur("momo.mps");
 	std::cout << " done" << std::endl;
@@ -87,7 +95,7 @@ int main(int argc, char **argv) {
 	std::cout<< ss.tab << std::endl;
 	ss.run();
 	std::cout << " vecteur resultat : " <<std::endl;
-	std::cout << std::endl << ss.best << std::endl << std::endl;*/
+	std::cout << std::endl << ss.best << std::endl << std::endl;
 
 
 	/********************************************* BRANCH AND BOUND ***************************************************/

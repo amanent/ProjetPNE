@@ -8,7 +8,7 @@
 #ifndef SIMPLEX_H_
 #define SIMPLEX_H_
 
-#include "./lib/Eigen/Core"
+#include "../lib/Eigen/Core"
 #include <utility>
 #include "LinearProblem.h"
 

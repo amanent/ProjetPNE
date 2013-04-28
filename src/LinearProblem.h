@@ -8,7 +8,7 @@
 #ifndef LINEARPROBLEM_H_
 #define LINEARPROBLEM_H_
 
-#include "./lib/Eigen/Core"
+#include "../lib/Eigen/Core"
 #include "Probleme.h"
 #include <iostream>
 

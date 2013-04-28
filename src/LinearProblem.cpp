@@ -38,7 +38,7 @@ LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t) {
 		}
 		switch (it.getType().c_str()[0]) {
 		case 'G':
-			//v *= -1;
+			v *= -1;
 			break;
 		case 'L':
 
