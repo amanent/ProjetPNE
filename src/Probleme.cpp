@@ -2,6 +2,7 @@
 #include "Contrainte.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 using namespace std;
 
 Probleme::Probleme()
@@ -57,9 +58,9 @@ bool Probleme::parseur(string nom){
                         v.setNom(tampon[1]);
                         ajouter_variable(v);
                         if(this->fct_objective.getNom() == tampon[2]){
-                            this->fct_objective.ajouter_variable(tampon[1], atoi(tampon[3].c_str()));
+                            this->fct_objective.ajouter_variable(tampon[1], stof(tampon[3], NULL));
                         }else
-                            this->getContrainte(tampon[2])->ajouter_variable(tampon[1], atoi(tampon[3].c_str()));
+                            this->getContrainte(tampon[2])->ajouter_variable(tampon[1], stof(tampon[3], NULL));
 
                     getline(fichier, line);
 
