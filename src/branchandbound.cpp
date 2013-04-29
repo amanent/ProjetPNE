@@ -114,7 +114,7 @@ void BranchAndBound::run(){
 					tmp.row(i) = this->best.row(i) * lp.objective.row(i);
 				}
 				localBound = tmp.sum();
-
+				std::cout << "lb " << localBound << " gb " << globalBound << std::endl;
 				// on coupe si besoin, sinon on met à jour le vecteur best
 				if(lp.type == LinearProblem::MIN){
 					if(localBound >= globalBound){
@@ -122,6 +122,7 @@ void BranchAndBound::run(){
 					}else{
 						this->best = ss.best;
 						globalBound = localBound;
+						//break;
 					}
 				}else{
 					if(localBound < globalBound)
@@ -129,6 +130,7 @@ void BranchAndBound::run(){
 					else{
 						this->best = ss.best;
 						globalBound = localBound;
+						//break;
 					}
 				}
 			}
@@ -175,27 +177,31 @@ bool BranchAndBound::step(LinearProblem lp, Eigen::VectorXf vect, int step, std:
 	//std::cout << "global bound " << globalBound << " local bound " << localBound << std::endl;
 
 	// on coupe si nécessaire
-	/*if(lp.type == LinearProblem::MIN){
-		if(localBound >= globalBound){
-			return false;
-		}
-		else{
-			this->best = ss.best;
-			globalBound = localBound;
-		}
-	}else{
-		if(localBound <= globalBound){
-			return false;
-		}else{
-			this->best = ss.best;
-			globalBound = localBound;
-		}
-	}*/
+
 
 	// si pas de valeur non entier, c'est good
 	if(res == -1){
-		this->best = ss.best;
-		return true;
+		std::cout << "lb " << localBound << " gb " << globalBound << std::endl;
+		/*this->best = ss.best;
+		return true;*/
+		if(lp.type == LinearProblem::MIN){
+				if(localBound >= globalBound){
+					return false;
+				}
+				else{
+					this->best = ss.best;
+					globalBound = localBound;
+					return true;
+				}
+			}else{
+				if(localBound <= globalBound){
+					return false;
+				}else{
+					this->best = ss.best;
+					globalBound = localBound;
+					return true;
+				}
+			}
 	}
 	// si on est arrivé a la fin de notre nombre max d'itérations, on arrete
 	else if(step == 0)
