@@ -166,7 +166,6 @@ bool BranchAndBound::step(LinearProblem lp, Eigen::VectorXf vect, int step, std:
 	// de même que pour la méthode run, on calcule la valeur de la fonction objective avec le vecteur renvoyé par le simplex
 	int res = this->getFirstNonIntegerVar(ss.best, vars_set);
 	std::cout << "res " << res << std::endl;
-	vars_set.push_back(res);
 	int localBound;
 	//std::cout << "simplex best " << std::endl << ss.best << std::endl;
 	Eigen::VectorXf tmp(ss.best.rows());
@@ -182,6 +181,17 @@ bool BranchAndBound::step(LinearProblem lp, Eigen::VectorXf vect, int step, std:
 	// si pas de valeur non entier, c'est good
 	if(res == -1){
 		std::cout << "lb " << localBound << " gb " << globalBound << std::endl;
+
+		std::cout << "vars_set : ";
+		for(unsigned int  i = 0; i < vars_set.size(); ++i){
+			std::cout << vars_set[i] << " ";
+		}
+		std::cout << std::endl;
+		std::cout << "The non integer ones "  << this->getFirstNonIntegerVar(ss.best) << std::endl;
+
+		if(std::find(vars_set.begin(), vars_set.end(),this->getFirstNonIntegerVar(ss.best)) != vars_set.end()){
+			return false;
+		}
 		/*this->best = ss.best;
 		return true;*/
 		if(lp.type == LinearProblem::MIN){
@@ -191,7 +201,6 @@ bool BranchAndBound::step(LinearProblem lp, Eigen::VectorXf vect, int step, std:
 				else{
 					this->best = ss.best;
 					globalBound = localBound;
-					return true;
 				}
 			}else{
 				if(localBound <= globalBound){
@@ -199,14 +208,14 @@ bool BranchAndBound::step(LinearProblem lp, Eigen::VectorXf vect, int step, std:
 				}else{
 					this->best = ss.best;
 					globalBound = localBound;
-					return true;
 				}
 			}
 	}
 	// si on est arrivé a la fin de notre nombre max d'itérations, on arrete
-	else if(step == 0)
-		return false;
+	/*else if(step == 0)
+		return false;*/
 	else{
+		vars_set.push_back(res);
 		// sinon on fait la meme chose que pour la méthode run
 		Eigen::VectorXf vect = Eigen::VectorXf(lp.constraints.cols());
 		int obj;
@@ -231,7 +240,7 @@ bool BranchAndBound::step(LinearProblem lp, Eigen::VectorXf vect, int step, std:
 			}
 			if(this->step(lp,vect,step - 1, vars_set)){
 				//return true;
-				int localBound;
+				/*int localBound;
 				//std::cout << "simplex best " << std::endl << ss.best << std::endl;
 				Eigen::VectorXf tmp(ss.best.rows());
 				for(int i = 0; i < ss.best.rows(); i++){
@@ -253,7 +262,7 @@ bool BranchAndBound::step(LinearProblem lp, Eigen::VectorXf vect, int step, std:
 						this->best = ss.best;
 						globalBound = localBound;
 					}
-				}
+				}*/
 
 			}
 		}
