@@ -66,13 +66,21 @@ int main(int argc, char **argv) {
 	std::cout << std::endl << ss.best << std::endl << std::endl;*/
 
 
-	std::cout << " PROBLEME MIN SANS DUALIZATION " << std::endl;
+	/**************************** PROBLEME AVEC B&B (fichier test2.mps )*************************/
+		/* PROBLEM : MIN -1x -2x2
+		 * 			2x + 4x2 <= 3
+		 * 			x >= 0
+		 * 			x2 >= 0
+		 * RESULTAT ATTENDU x = 1 , x2 = 0 | MIN = -1 ( Resultat sur à 100% )
+		 */
+	/*std::cout << " PROBLEME MIN SANS DUALIZATION " << std::endl;
 	Probleme p;
 	p.parseur("test2.mps");
 	std::cout << " done" << std::endl;
 	LinearProblem lp(&p,LinearProblem::MIN,true);
 	std::cout << " done" << std::endl;
-
+	LinearProblem dual = lp.dualize(LinearProblem::MAX);
+	BranchAndBound * b = new BranchAndBound(&dual);*/
 	/*Simplex ss(&lp,true);
 		std::cout << "tableau de départ" << std::endl;
 		std::cout<< ss.tab << std::endl;
@@ -92,35 +100,37 @@ int main(int argc, char **argv) {
 	 * RESULTAT ATTENDU x = 6/7 , y = 24/7 | MIN = 66 ( Resultat sur à 100% )
 	 */
 
-	/*std::cout << " PROBLEME MIN AVEC DUALIZATION " << std::endl;
+	std::cout << " PROBLEME MIN AVEC DUALIZATION " << std::endl;
 	Probleme p;
 	p.parseur("momo.mps");
 	std::cout << " done" << std::endl;
-	LinearProblem lp(&p,LinearProblem::MIN);
+	LinearProblem lp(&p,LinearProblem::MIN,false);
 	std::cout << " done" << std::endl;
 
-	Simplex s1(&lp ,true);
-	std::cout << " Tableau initial " <<std::endl;
-	std::cout<< s1.tab << std::endl;
-	std::cout<< " Tableau dual" <<std::endl;
 
 	LinearProblem dualize = lp.dualize(LinearProblem::MAX);
+	BranchAndBound * b = new BranchAndBound(&dualize);
 
-	Simplex ss(&dualize,false);
+
+	/*Simplex s1(&lp ,true);
+	std::cout << " Tableau initial " <<std::endl;
+	std::cout<< s1.tab << std::endl;*/
+	/*Simplex ss(&dualize,false);
+	std::cout<< " Tableau dual" <<std::endl;
 	std::cout<< ss.tab << std::endl;
 	ss.run();
 	std::cout << " vecteur resultat : " <<std::endl;
-	std::cout << std::endl << ss.best << std::endl << std::endl;
-	 */
+	std::cout << std::endl << ss.best << std::endl << std::endl;*/
+
 
 	/********************************************* BRANCH AND BOUND ***************************************************/
-	BranchAndBound * b = new BranchAndBound(&lp);
+	//BranchAndBound * b = new BranchAndBound(&lp);
 
 	b->run();
 	std::cout << " done" << std::endl;
 	std::ofstream res("results.txt", std::ios::out);
 	std::cout << "Ecriture des resultats dans le ficher results.txt...";
-	res << "Best " << std::endl <<  b->getBest();
+	res << "Best " << std::endl <<  b->getBest() << std::endl;
 	res  << "Objective best result " << b->getBestResult() << std::endl;
 	std::cout << " done" << std::endl;
 	std::cout << "Meilleur resultat " << b->getBestResult() << std::endl;

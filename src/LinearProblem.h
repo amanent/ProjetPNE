@@ -33,6 +33,8 @@ public:
 	LinearProblem* createDual();
 	LinearProblem* dual;
 
+	bool isDual;
+
 	void switchMode();
 	void minimize();
 	void maximize();

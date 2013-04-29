@@ -73,9 +73,16 @@ int Simplex::findPivotRow(int column) {
 	for (int i = 1; i < tab.rows(); ++i) {
 		//std::cout << tab(i,column) << " ";
 		float ratio = tab(i, 0) / tab(i, column);
-		if ( (tab(i, column) > 0 && ratio < min_ratio ) || min_ratio < 0 ) {
-			min_ratio = ratio;
-			pivot_row = i;
+		if(isPrimal){
+			if ( (tab(i, column) > 0 && ratio < min_ratio ) || min_ratio < 0 ) {
+				min_ratio = ratio;
+				pivot_row = i;
+			}
+		}else{
+			if ( (ratio > 0 && ratio < min_ratio ) || min_ratio < 0 ) {
+				min_ratio = ratio;
+				pivot_row = i;
+			}
 		}
 	}
 	//std::cout << std::endl;
@@ -102,11 +109,11 @@ Eigen::VectorXf Simplex::run() {
 	int piv_col, piv_row;
 	while(1){
 		piv_col = findPivotColumn();
-		std::cout << " CHOIX PIVOT " << std::endl;
+		//std::cout << " CHOIX PIVOT " << std::endl;
 		std::cout << " simplexe run piv_col : "<< piv_col << std::endl;
 		if(piv_col < 0)
 		{
-			std::cout<< " STOP " << std::endl;
+			//std::cout<< " STOP " << std::endl;
 			getBest(); // optimal
 			return best;
 		}
@@ -115,13 +122,13 @@ Eigen::VectorXf Simplex::run() {
 
 		if(piv_row < 0)
 		{
-			std::cout << " Pas de solution" << std::endl;
+			//std::cout << " Pas de solution" << std::endl;
 			break; //caca
 		}
 		std::cout << " val pivot : " << tab(piv_row,piv_col);
-		std::cout << " " << std::endl;
+		//std::cout << " " << std::endl;
 		pivot(piv_row, piv_col);
-		std::cout << tab << std::endl;
+		//std::cout << tab << std::endl;
 	}
 	return best;
 }

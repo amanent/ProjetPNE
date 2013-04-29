@@ -20,6 +20,7 @@ private :
 	LinearProblem * lp;
 	Eigen::VectorXf best;
 	int globalBound;
+	bool debug;
 
 public :
 	BranchAndBound(LinearProblem * lp);

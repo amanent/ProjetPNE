@@ -12,18 +12,22 @@ LinearProblem::LinearProblem() {
 	type = MAX;
 	nbConstraints = 0;
 	nbVars = 0;
+	isDual = false;
 
 }
 
 LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t, bool inversion) {
 	std::cout << "Creation du probleme lineaire...";
-
+	isDual = false;
 	type = t;
 	dual = NULL;
 	nbConstraints = p->getNbConstraints();
 	nbVars = p->getNbVars();
 	int cpt = 0;
-	constraints.resize(nbConstraints+2*nbVars , nbVars + 1);
+	if(inversion)
+		constraints.resize(nbConstraints + 2*nbVars, nbVars + 1);
+	else
+		constraints.resize(nbConstraints + nbVars , nbVars + 1);
 	for(auto& it : p->getContraintes()){
 		Eigen::VectorXf v;
 		v.resize(nbVars + 1);
@@ -53,7 +57,8 @@ LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t, bool inversion
 		constraints.row(cpt++) = v;
 	}
 
-	/* AJOUTE DES CONTRAINTES DE TYPE x>= 0 */
+
+	// AJOUTE DES CONTRAINTES DE TYPE x>= 0
 	for(int i = 0; i < nbVars; i++){
 		Eigen::VectorXf tmp1(nbVars+1);
 		int j(0);
@@ -65,23 +70,26 @@ LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t, bool inversion
 				tmp1(j++) = 0;
 		}
 		constraints.row(cpt++) = tmp1;
-		nbConstraints++;
+		if(inversion)
+			nbConstraints++;
 	}
 
-	/* AJOUTE DES CONTRAINTES DE TYPE x <= 1 */
-	for(int i = 0; i < nbVars; i++){
-		Eigen::VectorXf tmp1(nbVars+1);
-		int j(0);
-		tmp1(j++) = p->getVariables()[i].getBorne();
-		//std::cout << p->getVariables()[i].getBorne() << std::endl;
-		for(int k = 0; k < nbVars; k++){
-			if(k == i)
-				tmp1(j++) = 1;
-			else
-				tmp1(j++) = 0;
+	if(inversion){
+		// AJOUTE DES CONTRAINTES DE TYPE x <= 1
+		for(int i = 0; i < nbVars; i++){
+			Eigen::VectorXf tmp1(nbVars+1);
+			int j(0);
+			tmp1(j++) = p->getVariables()[i].getBorne();
+			//std::cout << p->getVariables()[i].getBorne() << std::endl;
+			for(int k = 0; k < nbVars; k++){
+				if(k == i)
+					tmp1(j++) = 1;
+				else
+					tmp1(j++) = 0;
+			}
+			constraints.row(cpt++) = tmp1;
+			nbConstraints++;
 		}
-		constraints.row(cpt++) = tmp1;
-		nbConstraints++;
 	}
 
 	objective.resize(nbVars);
@@ -100,6 +108,7 @@ LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t, bool inversion
 
 LinearProblem LinearProblem::dualize(LinearProblem::Type t){
 	LinearProblem dual;
+	dual.isDual = true;
 	dual.type = t;
 	dual.nbConstraints = this->nbVars;
 	dual.nbVars = this->nbConstraints; // on ne recupere pas les contraitnes de type x>=0 car les variables vont changer*/
