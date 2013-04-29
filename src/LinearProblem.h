@@ -11,6 +11,7 @@
 #include "../lib/Eigen/Core"
 #include "Probleme.h"
 #include <iostream>
+#include <string>
 
 class LinearProblem {
 public:
@@ -18,7 +19,7 @@ public:
 	enum Type{MIN, MAX};
 
 	LinearProblem();
-	LinearProblem(Probleme * p, LinearProblem::Type t);
+	LinearProblem(Probleme * p, LinearProblem::Type t, bool inversion);
 	LinearProblem dualize(LinearProblem::Type t);
 	virtual ~LinearProblem();
 

@@ -15,7 +15,7 @@ LinearProblem::LinearProblem() {
 
 }
 
-LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t) {
+LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t, bool inversion) {
 	std::cout << "Creation du probleme lineaire...";
 
 	type = t;
@@ -23,7 +23,7 @@ LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t) {
 	nbConstraints = p->getNbConstraints();
 	nbVars = p->getNbVars();
 	int cpt = 0;
-	constraints.resize(nbConstraints+nbVars , nbVars + 1);
+	constraints.resize(nbConstraints+2*nbVars , nbVars + 1);
 	for(auto& it : p->getContraintes()){
 		Eigen::VectorXf v;
 		v.resize(nbVars + 1);
@@ -38,7 +38,8 @@ LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t) {
 		}
 		switch (it.getType().c_str()[0]) {
 		case 'G':
-			v *= -1;
+			if(inversion)
+				v *= -1;
 			break;
 		case 'L':
 
@@ -64,6 +65,23 @@ LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t) {
 				tmp1(j++) = 0;
 		}
 		constraints.row(cpt++) = tmp1;
+		nbConstraints++;
+	}
+
+	/* AJOUTE DES CONTRAINTES DE TYPE x <= 1 */
+	for(int i = 0; i < nbVars; i++){
+		Eigen::VectorXf tmp1(nbVars+1);
+		int j(0);
+		tmp1(j++) = p->getVariables()[i].getBorne();
+		//std::cout << p->getVariables()[i].getBorne() << std::endl;
+		for(int k = 0; k < nbVars; k++){
+			if(k == i)
+				tmp1(j++) = 1;
+			else
+				tmp1(j++) = 0;
+		}
+		constraints.row(cpt++) = tmp1;
+		nbConstraints++;
 	}
 
 	objective.resize(nbVars);
@@ -105,8 +123,8 @@ LinearProblem LinearProblem::dualize(LinearProblem::Type t){
 
 	/* On remplit les dernière lignes avec les contraintes de type x >= 0*/
 
-	  dual.constraints.conservativeResize(dual.nbConstraints+dual.nbVars,dual.nbVars+1);
-	 	 for(int k = 0 ; k < dual.nbVars ; k++){
+	dual.constraints.conservativeResize(dual.nbConstraints+dual.nbVars,dual.nbVars+1);
+	for(int k = 0 ; k < dual.nbVars ; k++){
 		Eigen::VectorXf tmp1(dual.nbVars+1);
 		int j(0);
 		tmp1(j++) = 0;
@@ -141,14 +159,4 @@ void LinearProblem::maximize() {
 void LinearProblem::updateSize() {
 	nbConstraints = constraints.rows();
 	nbVars = objective.rows();
-}
-
-LinearProblem::LinearProblem(string fileName) {
-	std::ifstream input = new std::ifstream(fileName.c_str(), ios_base::in);
-	std::string buffer;
-
-	if(!input.good()) {
-		cerr << "unable to read file" << std::endl;
-		exit(-1);
-
 }

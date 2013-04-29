@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
 	Probleme p;
 	p.parseur("caca.mps");
 	std::cout << " done" << std::endl;
-	LinearProblem lp(&p,LinearProblem::MIN);
+	LinearProblem lp(&p,LinearProblem::MIN,true);
 	std::cout << " done" << std::endl;
 
 	Simplex ss(&lp,true);
@@ -66,18 +66,33 @@ int main(int argc, char **argv) {
 	std::cout << std::endl << ss.best << std::endl << std::endl;*/
 
 
+	std::cout << " PROBLEME MIN SANS DUALIZATION " << std::endl;
+	Probleme p;
+	p.parseur("test2.mps");
+	std::cout << " done" << std::endl;
+	LinearProblem lp(&p,LinearProblem::MIN,true);
+	std::cout << " done" << std::endl;
+
+	/*Simplex ss(&lp,true);
+		std::cout << "tableau de départ" << std::endl;
+		std::cout<< ss.tab << std::endl;
+		ss.run();
+		std::cout << " vecteur resultat : " <<std::endl;
+		std::cout << std::endl << ss.best << std::endl << std::endl;*/
+
+
 	/****************************** DUALIZATION SUR PROBLEM TYPE min x+y ( fichier momo.mps )**********************/
 
-	 /* PROBLEM : MIN 21x + 14y
-	   *    2x + 3y >=12
-	   *    3x + y >= 6
-	   *    x + 3y >= 9
-	   *    y >= 0
-	   *    x >= 0
-	   * RESULTAT ATTENDU x = 6/7 , y = 24/7 | MIN = 66 ( Resultat sur à 100% )
+	/* PROBLEM : MIN 21x + 14y
+	 *    2x + 3y >=12
+	 *    3x + y >= 6
+	 *    x + 3y >= 9
+	 *    y >= 0
+	 *    x >= 0
+	 * RESULTAT ATTENDU x = 6/7 , y = 24/7 | MIN = 66 ( Resultat sur à 100% )
 	 */
 
-	std::cout << " PROBLEME MIN AVEC DUALIZATION " << std::endl;
+	/*std::cout << " PROBLEME MIN AVEC DUALIZATION " << std::endl;
 	Probleme p;
 	p.parseur("momo.mps");
 	std::cout << " done" << std::endl;
@@ -96,10 +111,10 @@ int main(int argc, char **argv) {
 	ss.run();
 	std::cout << " vecteur resultat : " <<std::endl;
 	std::cout << std::endl << ss.best << std::endl << std::endl;
-
+	 */
 
 	/********************************************* BRANCH AND BOUND ***************************************************/
-	/*BranchAndBound * b = new BranchAndBound(&lp);
+	BranchAndBound * b = new BranchAndBound(&lp);
 
 	b->run();
 	std::cout << " done" << std::endl;
@@ -109,7 +124,7 @@ int main(int argc, char **argv) {
 	res  << "Objective best result " << b->getBestResult() << std::endl;
 	std::cout << " done" << std::endl;
 	std::cout << "Meilleur resultat " << b->getBestResult() << std::endl;
-	delete b;*/
+	delete b;
 
 	/*std::cout << constraints << std::endl;
 	std::cout << objective << std::endl;

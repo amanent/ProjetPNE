@@ -72,7 +72,6 @@ bool Probleme::parseur(string nom){
                 }
                 getline(fichier, line);
                 while(line.find("ENDATA")){
-
                     tampon = SegmentselonSymbole(line, " ");
                     this->getVariable(tampon[3])->setBorne(atoi(tampon[4].c_str()));
                     if(tampon[1] == "UP"){

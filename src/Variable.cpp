@@ -1,10 +1,11 @@
 #include "Variable.h"
 #include <iostream>
 #include <fstream>
+#include <climits>
 
 Variable::Variable()
 {
-    this->borne = 0;
+    this->borne = INT_MAX;
     this->bounds = ">=";
 }
 

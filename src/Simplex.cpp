@@ -71,12 +71,14 @@ int Simplex::findPivotRow(int column) {
 	int pivot_row = 0;
 	float min_ratio = -1;
 	for (int i = 1; i < tab.rows(); ++i) {
+		//std::cout << tab(i,column) << " ";
 		float ratio = tab(i, 0) / tab(i, column);
-		if ( (ratio > 0 && ratio < min_ratio ) || min_ratio < 0 ) {
+		if ( (tab(i, column) > 0 && ratio < min_ratio ) || min_ratio < 0 ) {
 			min_ratio = ratio;
 			pivot_row = i;
 		}
 	}
+	//std::cout << std::endl;
 	if(min_ratio == -1)
 		return -1; //no bound
 	return pivot_row;
