@@ -77,6 +77,7 @@ void BranchAndBound::run(){
 
 	// si res renvoi -1 ce la signifie qu'on a pas de var non entiere dans le vecteur donc on s'arrete
 	if(res == -1){
+		best.resize(ss.best.rows());
 		this->best = ss.best;
 		return;
 	}
@@ -302,7 +303,8 @@ bool BranchAndBound::step(LinearProblem lp, Eigen::VectorXf vect, int step, std:
 float BranchAndBound::getBestResult(){
 	Eigen::VectorXf tmp(this->best.rows());
 	for(int i = 0; i < this->best.rows(); i++){
-		tmp.row(i) = this->best.row(i) * this->lp->objective.row(i);
+		//if(i < this->lp->objective.rows())
+			tmp.row(i) = this->best.row(i) * this->lp->objective.row(i);
 	}
 	return tmp.sum();
 }

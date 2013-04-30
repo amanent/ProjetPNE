@@ -85,10 +85,16 @@ int main(int argc, char **argv) {
 	Probleme p;
 	p.parseur("iis-bupa-cov.mps");
 	std::cout << " done" << std::endl;
-	LinearProblem lp(&p,LinearProblem::MIN,true);
+	LinearProblem lp(&p,LinearProblem::MIN,false);
 	std::cout << " done" << std::endl;
-	//LinearProblem dual = lp.dualize(LinearProblem::MAX);
-	BranchAndBound * b = new BranchAndBound(&lp);
+	LinearProblem dual = lp.dualize(LinearProblem::MAX);
+
+	Simplex s1(&lp ,true);
+		std::cout << " Tableau initial " <<std::endl;
+		std::cout<< s1.tab << std::endl;
+		std::cout<< " Tableau dual" <<std::endl;
+
+	BranchAndBound * b = new BranchAndBound(&dual);
 
 	/*Simplex ss(&lp,true);
 	std::cout << "tableau de départ" << std::endl;
@@ -111,14 +117,14 @@ int main(int argc, char **argv) {
 
 	/*std::cout << " PROBLEME MIN AVEC DUALIZATION " << std::endl;
 	Probleme p;
-	p.parseur("iis-pima-cov.mps");
+	p.parseur("momo.mps");
 	std::cout << " done" << std::endl;
 	LinearProblem lp(&p,LinearProblem::MIN,false);
 	std::cout << " done" << std::endl;
 
 
 	LinearProblem dualize = lp.dualize(LinearProblem::MAX);
-	BranchAndBound * b = new BranchAndBound(&dualize);*/
+	/*BranchAndBound * b = new BranchAndBound(&dualize);*/
 
 
 	/*Simplex s1(&lp ,true);

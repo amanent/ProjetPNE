@@ -104,8 +104,6 @@ LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t, bool inversion
 			tmp(i++) = 0;
 	}
 	objective = tmp;
-
-	this->updateSize();
 }
 
 LinearProblem LinearProblem::dualize(LinearProblem::Type t){
