@@ -71,19 +71,22 @@ int Simplex::findPivotRow(int column) {
 	int pivot_row = 0;
 	float min_ratio = -1;
 	for (int i = 1; i < tab.rows(); ++i) {
-		//std::cout << tab(i,column) << " ";
+		/*std::cout << "min ratio " << min_ratio << std::endl;
+		std::cout << tab(i,column) << " ";*/
 		float ratio = tab(i, 0) / tab(i, column);
 		if(isPrimal){
-			if ( (tab(i, column) > 0 && ratio < min_ratio ) || min_ratio < 0 ) {
+			if ( (tab(i, column) > 0  && ratio < min_ratio ) ||( min_ratio < 0 && tab(i, column) > 0) ) {
+				//std::cout << "maj min ratio " << min_ratio << " par ratio " << ratio << std::endl;
 				min_ratio = ratio;
 				pivot_row = i;
 			}
 		}else{
-			if ( (ratio > 0 && ratio < min_ratio ) || min_ratio < 0 ) {
+			if ( (tab(i, column) > 0  && ratio < min_ratio ) ||( min_ratio < 0 && tab(i, column) > 0) ) {
 				min_ratio = ratio;
 				pivot_row = i;
 			}
 		}
+		//std::cout << "piv row " << pivot_row << std::endl;
 	}
 	//std::cout << std::endl;
 	if(min_ratio == -1)
@@ -93,6 +96,8 @@ int Simplex::findPivotRow(int column) {
 
 void Simplex::pivot(int row, int col) {
 	float pivot = tab(row, col);
+	if(pivot == 0)
+		exit(-1);
 	for(int i(0); i < tab.cols(); ++i)
 		tab(row, i) /= pivot;
 	for (int i = 0; i < tab.rows(); ++i) {
@@ -110,7 +115,7 @@ Eigen::VectorXf Simplex::run() {
 	while(1){
 		piv_col = findPivotColumn();
 		//std::cout << " CHOIX PIVOT " << std::endl;
-		std::cout << " simplexe run piv_col : "<< piv_col << std::endl;
+		//std::cout << " simplexe run piv_col : "<< piv_col << std::endl;
 		if(piv_col < 0)
 		{
 			//std::cout<< " STOP " << std::endl;
@@ -118,14 +123,14 @@ Eigen::VectorXf Simplex::run() {
 			return best;
 		}
 		piv_row = findPivotRow(piv_col);
-		std::cout << " simplexe run piv_row : " << piv_row << std::endl;
+		//std::cout << " simplexe run piv_row : " << piv_row << std::endl;
 
 		if(piv_row < 0)
 		{
 			//std::cout << " Pas de solution" << std::endl;
 			break; //caca
 		}
-		std::cout << " val pivot : " << tab(piv_row,piv_col);
+		//std::cout << " val pivot : " << tab(piv_row,piv_col);
 		//std::cout << " " << std::endl;
 		pivot(piv_row, piv_col);
 		//std::cout << tab << std::endl;

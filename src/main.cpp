@@ -67,26 +67,35 @@ int main(int argc, char **argv) {
 
 
 	/**************************** PROBLEME AVEC B&B (fichier test2.mps )*************************/
-		/* PROBLEM : MIN -1x -2x2
-		 * 			2x + 4x2 <= 3
-		 * 			x >= 0
-		 * 			x2 >= 0
-		 * RESULTAT ATTENDU x = 1 , x2 = 0 | MIN = -1 ( Resultat sur à 100% )
-		 */
+	/* PROBLEM : MIN -1x -2x2
+	 * 			2x + 4x2 <= 3
+	 * 			x >= 0
+	 * 			x2 >= 0
+	 * RESULTAT ATTENDU x = 1 , x2 = 0 | MIN = -1 ( Resultat sur à 100% )
+	 */
 	/*std::cout << " PROBLEME MIN SANS DUALIZATION " << std::endl;
 	Probleme p;
 	p.parseur("test2.mps");
 	std::cout << " done" << std::endl;
 	LinearProblem lp(&p,LinearProblem::MIN,true);
 	std::cout << " done" << std::endl;
-	LinearProblem dual = lp.dualize(LinearProblem::MAX);
-	BranchAndBound * b = new BranchAndBound(&dual);*/
+	BranchAndBound * b = new BranchAndBound(&lp);*/
+
+	std::cout << " PROBLEME MIN SANS DUALIZATION " << std::endl;
+	Probleme p;
+	p.parseur("iis-bupa-cov.mps");
+	std::cout << " done" << std::endl;
+	LinearProblem lp(&p,LinearProblem::MIN,true);
+	std::cout << " done" << std::endl;
+	//LinearProblem dual = lp.dualize(LinearProblem::MAX);
+	BranchAndBound * b = new BranchAndBound(&lp);
+
 	/*Simplex ss(&lp,true);
-		std::cout << "tableau de départ" << std::endl;
-		std::cout<< ss.tab << std::endl;
-		ss.run();
-		std::cout << " vecteur resultat : " <<std::endl;
-		std::cout << std::endl << ss.best << std::endl << std::endl;*/
+	std::cout << "tableau de départ" << std::endl;
+	std::cout<< ss.tab << std::endl;
+	ss.run();
+	std::cout << " vecteur resultat : " <<std::endl;
+	std::cout << std::endl << ss.best << std::endl << std::endl;*/
 
 
 	/****************************** DUALIZATION SUR PROBLEM TYPE min x+y ( fichier momo.mps )**********************/
@@ -100,22 +109,22 @@ int main(int argc, char **argv) {
 	 * RESULTAT ATTENDU x = 6/7 , y = 24/7 | MIN = 66 ( Resultat sur à 100% )
 	 */
 
-	std::cout << " PROBLEME MIN AVEC DUALIZATION " << std::endl;
+	/*std::cout << " PROBLEME MIN AVEC DUALIZATION " << std::endl;
 	Probleme p;
-	p.parseur("momo.mps");
+	p.parseur("iis-pima-cov.mps");
 	std::cout << " done" << std::endl;
 	LinearProblem lp(&p,LinearProblem::MIN,false);
 	std::cout << " done" << std::endl;
 
 
 	LinearProblem dualize = lp.dualize(LinearProblem::MAX);
-	BranchAndBound * b = new BranchAndBound(&dualize);
+	BranchAndBound * b = new BranchAndBound(&dualize);*/
 
 
 	/*Simplex s1(&lp ,true);
 	std::cout << " Tableau initial " <<std::endl;
-	std::cout<< s1.tab << std::endl;*/
-	/*Simplex ss(&dualize,false);
+	std::cout<< s1.tab << std::endl;
+	Simplex ss(&dualize,false);
 	std::cout<< " Tableau dual" <<std::endl;
 	std::cout<< ss.tab << std::endl;
 	ss.run();

@@ -14,12 +14,13 @@
 #include <climits>
 #include <iostream>
 #include <algorithm>
+#include <cfloat>
 
 class BranchAndBound{
 private :
 	LinearProblem * lp;
 	Eigen::VectorXf best;
-	int globalBound;
+	float globalBound;
 	bool debug;
 
 public :
