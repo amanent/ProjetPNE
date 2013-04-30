@@ -12,7 +12,7 @@ BranchAndBound::BranchAndBound(LinearProblem * lp){
 		this->globalBound = FLT_MAX;
 	else
 		this->globalBound = FLT_MIN;
-	debug = true;
+	debug = false;
 }
 
 int BranchAndBound::getFirstNonIntegerVar(Eigen::VectorXf best){
@@ -46,7 +46,7 @@ void BranchAndBound::run(){
 	 */
 
 
-	std::cout << "b&b... " <<std::endl;
+	std::cout << "b&b... ";
 	std::vector<int> vars_set;
 	LinearProblem lp = *(this->lp);
 
@@ -77,7 +77,7 @@ void BranchAndBound::run(){
 
 	// si res renvoi -1 ce la signifie qu'on a pas de var non entiere dans le vecteur donc on s'arrete
 	if(res == -1){
-		best.resize(ss.best.rows());
+		std::cout << "ss rows " << ss.best.rows() << std::endl;
 		this->best = ss.best;
 		return;
 	}

@@ -17,7 +17,7 @@ LinearProblem::LinearProblem() {
 }
 
 LinearProblem::LinearProblem(Probleme * p, LinearProblem::Type t, bool inversion) {
-	std::cout << "Creation du probleme lineaire...";
+	std::cout << "Linear problem creation...";
 	isDual = false;
 	type = t;
 	dual = NULL;
@@ -110,8 +110,8 @@ LinearProblem LinearProblem::dualize(LinearProblem::Type t){
 	LinearProblem dual;
 	dual.isDual = true;
 	dual.type = t;
-	dual.nbConstraints = this->nbVars;
-	dual.nbVars = this->nbConstraints ; // on ne recupere pas les contraitnes de type x>=0 car les variables vont changer*/
+	dual.nbConstraints = this->constraints.cols() - 1;
+	dual.nbVars = this->nbConstraints ; // on ne recupere pas les contraitnes de type x>=0 car les variables vont changer
 	// nb ligne : nb contraintes + nb contraintes sur les var ( type x >= 0 ) | nb colonnes : nb vars + nb contraintes + 1 pour la partie droite de l'inégalité */
 	dual.constraints.resize(dual.nbConstraints,dual.nbVars+1);
 	dual.objective = this->constraints.col(0);

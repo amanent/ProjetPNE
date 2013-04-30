@@ -17,7 +17,7 @@ Probleme::~Probleme()
 
 
 bool Probleme::parseur(string nom){
-	std::cout << "Parsage du fichier "<< nom <<"...";
+	std::cout << nom << " parsing" <<"...";
     string line;
     vector<string> tampon;
     //On ouvre le fichier que l'on doit lire
